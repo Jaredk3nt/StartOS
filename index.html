@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <button class="toolbar-button" onclick="createConfigWindow()">
+        StartWave
+      </button>
+      <button class="toolbar-button" onclick="createBookmarkWindow()">
+        New Window
+      </button>
+    </div>
+    
+    <div id="desktop"></div>
+
+    <script>
+      let currentWindow;
+      let windows = {};
+      let config = {};
+      // Constants
+      const LS_WINDOWS_KEY = "startwave-windows";
+      const LS_CONFIG_KEY = "startwave-config";
+      const DEFAULT_LOCATON = { x: 8, y: 32 };
+      const ADD_BOOKMARK_ID = "create-bookmark";
+      const CONFIG_ID = 'config-window';
+
+      function genId() {
+        return "window-" + Math.random().toString(16).slice(2);
+      }
+    </script>
+    <script src="src/windows.js"></script>
+    <script src="src/utils/config.js"></script>
+    <script src="src/utils/bookmarks.js"></script>
+    <script src="src/utils/windows.js"></script>
+    <script src="src/utils/dragable.js"></script>
+    <script>
+      loadConfig();
+      loadWindows();
+    </script>
+  </body>
+</html>
