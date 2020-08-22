@@ -22,7 +22,13 @@ body {
   border-bottom: 1px solid black;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 4px 16px;
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
 }
 
 .toolbar-title {
@@ -37,9 +43,23 @@ body {
   background-color: transparent;
   font-family: "Alata", sans-serif;
   font-size: 11px;
+  text-decoration: none;
+  color: black;
+  margin: 0px;
+  padding: 0px 8px;
 }
 .toolbar-button:hover {
   cursor: pointer;
+}
+.toolbar-button.bold {
+  font-weight: 600;;
+}
+
+#toolbar-time {
+  border-left: 1px solid black;
+}
+#toolbar-time:hover {
+  cursor: default;
 }
 
 #desktop {
@@ -91,16 +111,17 @@ body {
   content: "";
   position: absolute;
   width: 100%;
-  height: 25%;
+  height: 20%;
+  top: 10%;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
 .window-toolbar-lines::after {
   content: "";
   position: absolute;
-  top: 70%;
+  top: 60%;
   width: 100%;
-  height: 25%;
+  height: 20%;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }

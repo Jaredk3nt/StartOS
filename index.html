@@ -8,12 +8,20 @@
   </head>
   <body>
     <div class="toolbar">
-      <button class="toolbar-button" onclick="createConfigWindow()">
-        StartWave
-      </button>
-      <button class="toolbar-button" onclick="createBookmarkWindow()">
-        New Window
-      </button>
+      <div class="toolbar-section">
+        <button class="toolbar-button bold" onclick="createConfigWindow()">
+          StartWave
+        </button>
+        <button class="toolbar-button" onclick="createBookmarkWindow()">
+          New Window
+        </button>
+      </div>
+      <div class="toolbar-section">
+        <a class="toolbar-button" href="https://github.com/Jaredk3nt/startwave">
+          GitHub
+        </a>
+        <p id="toolbar-time" class="toolbar-button"></p>
+      </div>
     </div>
 
     <div id="desktop"></div>
@@ -28,6 +36,7 @@
       const DEFAULT_LOCATON = { x: 8, y: 32 };
       const ADD_BOOKMARK_ID = "create-bookmark";
       const CONFIG_ID = "config-window";
+      const DAYS = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
       function genId() {
         return "window-" + Math.random().toString(16).slice(2);
@@ -40,6 +49,22 @@
           console.log({ err });
           return undefined;
         }
+      }
+
+      setDateTime();
+      const s = new Date().getSeconds();
+      setTimeout(() => {
+        setDateTime();
+        setInterval(setDateTime, 1000 * 60);
+      }, (60 - s) * 1000);
+
+      function setDateTime() {
+        const timeEl = document.getElementById("toolbar-time");
+        const d = new Date();
+        const hours = ((d.getHours() + 11) % 12) + 1;
+        timeEl.innerText = `${
+          DAYS[d.getDay()]
+        } ${hours}:${d.getMinutes().toString().padStart(2, "0")}`;
       }
     </script>
     <script src="src/windows.js"></script>

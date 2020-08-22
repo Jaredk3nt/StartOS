@@ -34,8 +34,8 @@ function updateConfig() {
 }
 
 function loadWallpaper() {
+  const el = document.getElementById("desktop");
   if (config.wallpaper) {
-    const el = document.getElementById("desktop");
     if (
       // TODO: replace conditions with regex
       config.wallpaper.startsWith("http") ||
@@ -51,6 +51,9 @@ function loadWallpaper() {
     ) {
       el.style["background-color"] = config.wallpaper;
     }
+  } else {
+    el.style["background-color"] = null;
+    el.style["background-image"] = null;
   }
 }
 

@@ -72,7 +72,6 @@ function enableDragable(handle, target, container) {
   }
 
   function handleResize() {
-    console.log("resize");
     const el = document.getElementById(target);
     const rect = el.getBoundingClientRect();
     if (windows[target]) {
@@ -80,7 +79,6 @@ function enableDragable(handle, target, container) {
         height: `${rect.height}px`,
         width: `${rect.width}px`,
       };
-      console.log(windows);
       saveWindows();
     }
   }
