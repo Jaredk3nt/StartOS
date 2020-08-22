@@ -146,7 +146,9 @@ function bookmarkContent(id, bookmarks) {
           role="button"
           
         >
-            <button class="close-button" onclick='removeBookmark("${id}", "${idx}")'></button>
+            <div class="flex-end">
+              <button class="close-button" onclick='removeBookmark("${id}", "${idx}")'></button>
+            </div>
             <div onclick="createWebpageWindow('', '${b.label}', '${b.href}')">
               <div class="bookmark-icon"></div>
               <p class="bookmark-title">${b.label}</p>
@@ -156,7 +158,9 @@ function bookmarkContent(id, bookmarks) {
     }
     return `
       <li class="bookmark">
-        <button class="close-button" onclick='removeBookmark("${id}", "${idx}")'></button>
+        <div class="flex-end">
+          <button class="close-button" onclick='removeBookmark("${id}", "${idx}")'></button>
+        </div>
         <a href="${b.href}">
           <div class="bookmark-icon"></div>
           <p class="bookmark-title">${b.label}</p>

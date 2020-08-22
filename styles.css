@@ -169,7 +169,19 @@ body {
 .bookmark-icon {
   border: 1px solid black;
   width: 90px;
-  height: 80px;
+  height: 60px;
+  margin-top: 10px;
+  position: relative;
+}
+.bookmark-icon::before {
+  content: "";
+  display: block;
+  position: absolute;
+  border: 1px solid black;
+  width: 40px;
+  height: 8px;
+  top: -10px;
+  left: 2px;
 }
 
 .bookmark-title {
@@ -247,4 +259,9 @@ body {
 .webpage-iframe {
   height: 100%;
   width: 100%;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
 }
