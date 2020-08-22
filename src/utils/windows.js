@@ -1,5 +1,5 @@
 function loadWindows() {
-  windows = JSON.parse(localStorage.getItem(LS_WINDOWS_KEY));
+  windows = safeParse(localStorage.getItem(LS_WINDOWS_KEY)) || {};
   Object.keys(windows).forEach((w) => {
     if (windows[w].bookmarks && Array.isArray(windows[w].bookmarks)) {
       return createBookmarkWindow(w);
@@ -29,5 +29,8 @@ function redrawWindow(id) {
     windows[id].cleanup();
   }
   document.getElementById(id).remove();
-  createBookmarkWindow(id);
+  if (windows[id].bookmarks && Array.isArray(windows[id].bookmarks)) {
+    return createBookmarkWindow(id);
+  }
+  return createWebpageWindow(id);
 }

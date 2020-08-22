@@ -5,15 +5,13 @@
  */
 
 function loadConfig() {
-  config = JSON.parse(localStorage.getItem(LS_CONFIG_KEY));
-  console.log(config);
+  config = safeParse(localStorage.getItem(LS_CONFIG_KEY)) || {};
   applyConfig();
 }
 
 function applyConfig() {
   // Load all properties
   loadWallpaper();
-  console.log(config);
 }
 
 function saveConfig() {
@@ -58,11 +56,11 @@ function loadWallpaper() {
 
 function toggleInternalWebpagesButton() {
   const el = document.getElementById("internal-webpages-input");
-  if (el.classList.contains('active')) {
-    el.innerText = 'External';
-    return el.classList.remove('active');
+  if (el.classList.contains("active")) {
+    el.innerText = "External";
+    return el.classList.remove("active");
   }
 
-  el.innerText = 'Internal';
-  el.classList.add('active');
+  el.innerText = "Internal";
+  el.classList.add("active");
 }
