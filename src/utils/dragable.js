@@ -73,13 +73,15 @@ function enableDragable(handle, target, container) {
 
   function handleResize() {
     const el = document.getElementById(target);
-    const rect = el.getBoundingClientRect();
-    if (windows[target]) {
-      windows[target].size = {
-        height: `${rect.height}px`,
-        width: `${rect.width}px`,
-      };
-      saveWindows();
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (windows[target]) {
+        windows[target].size = {
+          height: `${rect.height}px`,
+          width: `${rect.width}px`,
+        };
+        saveWindows();
+      }
     }
   }
 

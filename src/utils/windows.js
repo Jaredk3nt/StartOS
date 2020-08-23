@@ -4,10 +4,16 @@ function loadWindows() {
     if (windows[w].bookmarks && Array.isArray(windows[w].bookmarks)) {
       return createBookmarkWindow(w);
     }
-    if (windows[w].type === "note") {
-      return createNoteWindow(w);
+    switch (windows[w].type) {
+      case "note":
+        return createNoteWindow(w);
+      case "image":
+        return createImageWindow(w);
+      case "video":
+        return createVideoWindow(w);
+      default:
+        return createWebpageWindow(w);
     }
-    return createWebpageWindow(w);
   });
 }
 
@@ -42,4 +48,46 @@ function updateNoteText(id) {
   const el = document.getElementById(id + "-content");
   windows[id].text = el.value;
   saveWindows();
+}
+
+function toggleMenu(id) {
+  const el = document.getElementById(id);
+  if (el.style.display) {
+    return (el.style.display = "");
+  }
+  return (el.style.display = "block");
+}
+
+function handleMenuClick(id, func) {
+  func();
+  toggleMenu(id);
+}
+
+function addPicture() {
+  console.log("add picture");
+  const title = document.getElementById("image-name-input").value;
+  const url = document.getElementById("image-input").value;
+  const id = genId();
+  windows[id] = {
+    title,
+    url,
+    type: "image",
+    location: { x: DEFAULT_LOCATON.x, y: DEFAULT_LOCATON.y },
+  };
+  saveWindows();
+  createImageWindow(id);
+}
+
+function addVideo() {
+  const title = document.getElementById("video-name-input").value;
+  const url = document.getElementById("video-input").value;
+  const id = genId();
+  windows[id] = {
+    title,
+    url,
+    type: "video",
+    location: { x: DEFAULT_LOCATON.x, y: DEFAULT_LOCATON.y },
+  };
+  saveWindows();
+  createVideoWindow(id);
 }

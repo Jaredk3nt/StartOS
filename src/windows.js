@@ -47,6 +47,35 @@ function createWindow(
   return newWindow;
 }
 
+function createImageWindow(id) {
+  createWindow(
+    id,
+    windows[id].title,
+    `<div
+      class="image-window"
+      style="background-image:url('${windows[id].url}');"
+      alt="${windows[id].title}"
+    ></div>`,
+    { width: "900px", height: "auto" }
+  );
+}
+
+function createVideoWindow(id) {
+  createWindow(
+    id,
+    windows[id].title,
+    `<iframe
+      class="webpage-iframe"
+      src="${windows[id].url}"
+      title="${windows[id].title}"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
+      allowfullscreen
+    />"`,
+    { width: "900px", height: "600px" }
+  );
+}
+
 function createNoteWindow(id) {
   if (!id) id = genId();
 
@@ -67,8 +96,7 @@ function createNoteWindow(id) {
       id + "-content"
     }" class="note-content" onkeyup="updateNoteText('${id}')">${
       windows[id].text
-    }</textarea>`,
-    { width: "900px", height: "600px" }
+    }</textarea>`
   );
 }
 
@@ -120,6 +148,50 @@ function createConfigWindow() {
   );
 }
 
+function createAddVideoWindow() {
+  createWindow(
+    ADD_VIDEO_ID,
+    "Create Video Window",
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="video-name-input" />
+      </div>
+      <div class="input-field">
+        <label>Video URL</label>
+        <input id="video-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_VIDEO_ID}')">Cancel</button>
+        <button class="button" onclick="addVideo()">OK</button>
+      </div>
+    </div>`,
+    { width: "300px", height: "auto" }
+  );
+}
+
+function createAddPictureWindow() {
+  createWindow(
+    ADD_PICTURE_ID,
+    "Create Image Window",
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="image-name-input" />
+      </div>
+      <div class="input-field">
+        <label>Image URL</label>
+        <input id="image-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_PICTURE_ID}')">Cancel</button>
+        <button class="button" onclick="addPicture()">OK</button>
+      </div>
+    </div>`,
+    { width: "300px", height: "auto" }
+  );
+}
+
 function createAddBookmarkWindow(id, options = {}) {
   createWindow(
     ADD_BOOKMARK_ID,
@@ -164,7 +236,6 @@ function createBookmarkWindow(id, options = {}) {
 
 function bookmarkContent(id, bookmarks) {
   const lis = bookmarks.map((b, idx) => {
-    console.log(config);
     if (config.internalWebpages) {
       return `
         <li

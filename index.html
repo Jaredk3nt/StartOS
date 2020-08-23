@@ -10,25 +10,44 @@
     <div class="toolbar">
       <div class="toolbar-section">
         <div class="menu-button">
-          <button class="toolbar-button bold" onclick="createConfigWindow()">
+          <button
+            class="toolbar-button bold"
+            onclick="toggleMenu('start-menu')"
+          >
             StartOS
           </button>
           <div id="start-menu" class="menu">
             <ul>
-              <li onclick="createConfigWindow()">Settings</li>
+              <li onclick="handleMenuClick('start-menu', createConfigWindow)">
+                Settings
+              </li>
             </ul>
           </div>
         </div>
         <div class="menu-button">
-          <button class="toolbar-button" onclick="createBookmarkWindow()">
+          <button class="toolbar-button" onclick="toggleMenu('window-menu')">
             New Window
           </button>
           <div id="window-menu" class="menu">
             <ul>
-              <li onclick="createBookmarkWindow()">Bookmarks</li>
-              <li onclick="createNoteWindow()">Note</li>
-              <li onclick="createBookmarkWindow()">Picture</li>
-              <li onclick="createBookmarkWindow()">Video</li>
+              <li
+                onclick="handleMenuClick('window-menu', createBookmarkWindow)"
+              >
+                Bookmarks
+              </li>
+              <li onclick="handleMenuClick('window-menu', createNoteWindow)">
+                Note
+              </li>
+              <li
+                onclick="handleMenuClick('window-menu', createAddPictureWindow)"
+              >
+                Image
+              </li>
+              <li
+                onclick="handleMenuClick('window-menu', createAddVideoWindow)"
+              >
+                Video
+              </li>
             </ul>
           </div>
         </div>
@@ -52,6 +71,8 @@
       const LS_CONFIG_KEY = "startwave-config";
       const DEFAULT_LOCATON = { x: 8, y: 32 };
       const ADD_BOOKMARK_ID = "create-bookmark";
+      const ADD_PICTURE_ID = "create-picture";
+      const ADD_VIDEO_ID = "create-video";
       const CONFIG_ID = "config-window";
       const DAYS = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
