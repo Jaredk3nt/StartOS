@@ -294,3 +294,20 @@ body {
   padding: 1em;
   overflow: auto;
 }
+
+.menu-buttom {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  position: absolute;
+  width: 100px;
+}
+
+.menu ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}

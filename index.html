@@ -9,15 +9,29 @@
   <body>
     <div class="toolbar">
       <div class="toolbar-section">
-        <button class="toolbar-button bold" onclick="createConfigWindow()">
-          StartOS
-        </button>
-        <button class="toolbar-button" onclick="createBookmarkWindow()">
-          New Window
-        </button>
-        <button class="toolbar-button" onclick="createNoteWindow()">
-          New Notes
-        </button>
+        <div class="menu-button">
+          <button class="toolbar-button bold" onclick="createConfigWindow()">
+            StartOS
+          </button>
+          <div id="start-menu" class="menu">
+            <ul>
+              <li onclick="createConfigWindow()">Settings</li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-button">
+          <button class="toolbar-button" onclick="createBookmarkWindow()">
+            New Window
+          </button>
+          <div id="window-menu" class="menu">
+            <ul>
+              <li onclick="createBookmarkWindow()">Bookmarks</li>
+              <li onclick="createNoteWindow()">Note</li>
+              <li onclick="createBookmarkWindow()">Picture</li>
+              <li onclick="createBookmarkWindow()">Video</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="toolbar-section">
         <a class="toolbar-button" href="https://github.com/Jaredk3nt/startos">
