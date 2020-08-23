@@ -4,6 +4,9 @@ function loadWindows() {
     if (windows[w].bookmarks && Array.isArray(windows[w].bookmarks)) {
       return createBookmarkWindow(w);
     }
+    if (windows[w].type === "note") {
+      return createNoteWindow(w);
+    }
     return createWebpageWindow(w);
   });
 }
@@ -33,4 +36,10 @@ function redrawWindow(id) {
     return createBookmarkWindow(id);
   }
   return createWebpageWindow(id);
+}
+
+function updateNoteText(id) {
+  const el = document.getElementById(id + "-content");
+  windows[id].text = el.value;
+  saveWindows();
 }

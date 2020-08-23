@@ -93,7 +93,7 @@ body {
   display: flex;
   align-items: center;
 }
-.window-toolbar {
+.window-toolbar:hover {
   cursor: grab;
 }
 
@@ -285,4 +285,12 @@ body {
 .flex-end {
   display: flex;
   justify-content: flex-end;
+}
+
+.note-content {
+  resize: none;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  overflow: auto;
 }

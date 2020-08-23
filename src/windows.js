@@ -29,12 +29,12 @@ function createWindow(
     `left:${x}px;top:${y}px;width:${width};height:${height}`
   );
   newWindow.innerHTML = `
-  <div class="window-toolbar" id="${id}-toolbar" >
-    <div class="window-toolbar-title">${title}</div>
-    <div class="window-toolbar-lines"></div>
-    <button class="close-button" onclick='removeWindow("${id}")'></button>
-  </div>
-  <div class="window-content">${content}</div>
+    <div class="window-toolbar" id="${id}-toolbar">
+      <div class="window-toolbar-title">${title}</div>
+      <div class="window-toolbar-lines"></div>
+      <button class="close-button" onclick='removeWindow("${id}")'></button>
+    </div>
+    <div class="window-content">${content}</div>
   `;
 
   document.getElementById("desktop").appendChild(newWindow);
@@ -43,10 +43,36 @@ function createWindow(
   if (windows[id]) {
     windows[id].cleanup = cleanup;
   }
+
+  return newWindow;
+}
+
+function createNoteWindow(id) {
+  if (!id) id = genId();
+
+  if (!windows[id]) {
+    windows[id] = {
+      title: "New Note",
+      type: "note",
+      text: "",
+      location: { x: DEFAULT_LOCATON.x, y: DEFAULT_LOCATON.y },
+    };
+    saveWindows();
+  }
+
+  createWindow(
+    id,
+    windows[id].title,
+    `<textarea id="${
+      id + "-content"
+    }" class="note-content" onkeyup="updateNoteText('${id}')">${
+      windows[id].text
+    }</textarea>`,
+    { width: "900px", height: "600px" }
+  );
 }
 
 function createWebpageWindow(id, title, url) {
-  console.log(id);
   if (!id) id = genId();
 
   if (!windows[id]) {
