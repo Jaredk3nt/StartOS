@@ -1,5 +1,12 @@
 function loadWindows() {
   windows = safeParse(localStorage.getItem(LS_WINDOWS_KEY)) || {};
+  zIndex = Object.values(windows).reduce((acc, w) => {
+    if (w.zIndex) {
+      return Math.max(acc, parseInt(w.zIndex));
+    }
+    return acc;
+  }, zIndex);
+
   Object.keys(windows).forEach((w) => {
     if (windows[w].bookmarks && Array.isArray(windows[w].bookmarks)) {
       return createBookmarkWindow(w);
@@ -64,7 +71,6 @@ function handleMenuClick(id, func) {
 }
 
 function addPicture() {
-  console.log("add picture");
   const title = document.getElementById("image-name-input").value;
   const url = document.getElementById("image-input").value;
   const id = genId();
@@ -76,6 +82,7 @@ function addPicture() {
   };
   saveWindows();
   createImageWindow(id);
+  removeWindow(ADD_IMAGE_ID);
 }
 
 function addVideo() {
@@ -90,4 +97,36 @@ function addVideo() {
   };
   saveWindows();
   createVideoWindow(id);
+  removeWindow(ADD_VIDEO_ID);
+}
+
+function onFocus(e) {
+  let el = e.target;
+  while (!el.classList.contains("window")) {
+    el = el.parentElement;
+  }
+  updateZindex(el.id);
+}
+
+function updateZindex(id) {
+  const el = document.getElementById(id);
+  zIndex++;
+  el.style["z-index"] = zIndex;
+  if (windows[id]) {
+    windows[id].zIndex = zIndex;
+  }
+
+  if (zIndex >= 98) {
+    const els = Array.from(document.getElementsByClassName("window"));
+    els.sort((a, b) => {
+      return parseInt(a.style["z-index"]) - parseInt(b.style["z-index"]);
+    });
+    els.forEach((window, idx) => {
+      window.style["z-index"] = idx;
+      windows[window.id].zIndex = idx;
+    });
+    zIndex = els.length;
+  }
+
+  saveWindows();
 }

@@ -66,12 +66,13 @@
       let currentWindow;
       let windows = {};
       let config = {};
+      let zIndex = 0;
       // Constants
       const LS_WINDOWS_KEY = "startwave-windows";
       const LS_CONFIG_KEY = "startwave-config";
       const DEFAULT_LOCATON = { x: 8, y: 32 };
       const ADD_BOOKMARK_ID = "create-bookmark";
-      const ADD_PICTURE_ID = "create-picture";
+      const ADD_IMAGE_ID = "create-picture";
       const ADD_VIDEO_ID = "create-video";
       const CONFIG_ID = "config-window";
       const DAYS = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -84,7 +85,6 @@
         try {
           return JSON.parse(item);
         } catch (err) {
-          console.log({ err });
           return undefined;
         }
       }

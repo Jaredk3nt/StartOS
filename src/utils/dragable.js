@@ -99,6 +99,7 @@ function enableDragable(handle, target, container) {
 
   const el = document.getElementById(target);
   new ResizeObserver(handleResize).observe(el);
+  el.onmousedown = onFocus;
 
   return cleanup;
 }

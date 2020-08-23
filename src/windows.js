@@ -13,6 +13,7 @@ function createWindow(
   let y = DEFAULT_LOCATON.y;
   let height = options.height;
   let width = options.width;
+  let winZIndex = zIndex;
   if (windows[id]) {
     x = windows[id].location.x;
     y = windows[id].location.y;
@@ -20,13 +21,16 @@ function createWindow(
       height = windows[id].size.height;
       width = windows[id].size.width;
     }
+    if (windows[id].zIndex) {
+      winZIndex = windows[id].zIndex;
+    }
   }
 
   newWindow.setAttribute("id", id);
   newWindow.setAttribute("class", "window");
   newWindow.setAttribute(
     "style",
-    `left:${x}px;top:${y}px;width:${width};height:${height}`
+    `left:${x}px;top:${y}px;width:${width};height:${height};z-index:${winZIndex};`
   );
   newWindow.innerHTML = `
     <div class="window-toolbar" id="${id}-toolbar">
@@ -38,6 +42,7 @@ function createWindow(
   `;
 
   document.getElementById("desktop").appendChild(newWindow);
+  updateZindex(id);
 
   const cleanup = enableDragable(id + "-toolbar", id, "desktop");
   if (windows[id]) {
@@ -56,7 +61,7 @@ function createImageWindow(id) {
       style="background-image:url('${windows[id].url}');"
       alt="${windows[id].title}"
     ></div>`,
-    { width: "900px", height: "auto" }
+    { width: "900px", height: "600px" }
   );
 }
 
@@ -172,7 +177,7 @@ function createAddVideoWindow() {
 
 function createAddPictureWindow() {
   createWindow(
-    ADD_PICTURE_ID,
+    ADD_IMAGE_ID,
     "Create Image Window",
     `<div class="padded-content">
       <div class="input-field">
@@ -184,7 +189,7 @@ function createAddPictureWindow() {
         <input id="image-input" />
       </div>
       <div class="button-field">
-        <button class="button" onclick="removeWindow('${ADD_PICTURE_ID}')">Cancel</button>
+        <button class="button" onclick="removeWindow('${ADD_IMAGE_ID}')">Cancel</button>
         <button class="button" onclick="addPicture()">OK</button>
       </div>
     </div>`,
