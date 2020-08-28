@@ -1,57 +1,114 @@
-function createWindow(
-  id,
-  title,
-  content,
-  options = {
-    width: "400px",
-    height: "500px",
-  }
-) {
-  const newWindow = document.createElement("div");
+const CONFIG_ID = 'config-window';
+const ADD_NOTE_ID = 'create-note';
+const ADD_VIDEO_ID = 'create-video';
+const ADD_IMAGE_ID = 'create-picture';
+const ADD_BOOKMARK_ID = 'create-bookmark';
+const ADD_BOOKMARKS_ID = 'create-bookmarks';
 
-  let x = DEFAULT_LOCATON.x;
-  let y = DEFAULT_LOCATON.y;
-  let height = options.height;
-  let width = options.width;
-  let winZIndex = zIndex;
-  if (windows[id]) {
-    x = windows[id].location.x;
-    y = windows[id].location.y;
-    if (windows[id].size) {
-      height = windows[id].size.height;
-      width = windows[id].size.width;
-    }
-    if (windows[id].zIndex) {
-      winZIndex = windows[id].zIndex;
-    }
-  }
-
-  newWindow.setAttribute("id", id);
-  newWindow.setAttribute("class", "window");
-  newWindow.setAttribute(
-    "style",
-    `left:${x}px;top:${y}px;width:${width};height:${height};z-index:${winZIndex};`
+/** CREATE NEW WINDOW FUNCTIONS **/
+function createAddBookmarksWindow() {
+  createWindow(
+    ADD_BOOKMARKS_ID,
+    'Create Bookmarks Window',
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="bookmarks-name-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_BOOKMARKS_ID}')">Cancel</button>
+        <button class="button" onclick="addBookmarks()">OK</button>
+      </div>
+    </div>`,
+    { width: '300px', height: 'auto' }
   );
-  newWindow.innerHTML = `
-    <div class="window-toolbar" id="${id}-toolbar">
-      <div class="window-toolbar-title">${title}</div>
-      <div class="window-toolbar-lines"></div>
-      <button class="close-button" onclick='removeWindow("${id}")'></button>
-    </div>
-    <div class="window-content">${content}</div>
-  `;
-
-  document.getElementById("desktop").appendChild(newWindow);
-  updateZindex(id);
-
-  const cleanup = enableDragable(id + "-toolbar", id, "desktop");
-  if (windows[id]) {
-    windows[id].cleanup = cleanup;
-  }
-
-  return newWindow;
 }
 
+function createAddNoteWindow() {
+  createWindow(
+    ADD_NOTE_ID,
+    'Create Note Window',
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="note-name-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_NOTE_ID}')">Cancel</button>
+        <button class="button" onclick="addNote()">OK</button>
+      </div>
+    </div>`,
+    { width: '300px', height: 'auto' }
+  );
+}
+
+function createAddPictureWindow() {
+  createWindow(
+    ADD_IMAGE_ID,
+    'Create Image Window',
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="image-name-input" />
+      </div>
+      <div class="input-field">
+        <label>Image URL</label>
+        <input id="image-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_IMAGE_ID}')">Cancel</button>
+        <button class="button" onclick="addPicture()">OK</button>
+      </div>
+    </div>`,
+    { width: '300px', height: 'auto' }
+  );
+}
+
+function createAddVideoWindow() {
+  createWindow(
+    ADD_VIDEO_ID,
+    'Create Video Window',
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="video-name-input" />
+      </div>
+      <div class="input-field">
+        <label>Video URL</label>
+        <input id="video-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_VIDEO_ID}')">Cancel</button>
+        <button class="button" onclick="addVideo()">OK</button>
+      </div>
+    </div>`,
+    { width: '300px', height: 'auto' }
+  );
+}
+
+function createAddBookmarkWindow(id, options = {}) {
+  createWindow(
+    ADD_BOOKMARK_ID,
+    'Create Bookmark',
+    `<div class="padded-content">
+      <div class="input-field">
+        <label>Name</label>
+        <input id="name-input" />
+      </div>
+      <div class="input-field">
+        <label>URL</label>
+        <input id="href-input" />
+      </div>
+      <div class="button-field">
+        <button class="button" onclick="removeWindow('${ADD_BOOKMARK_ID}')">Cancel</button>
+        <button class="button" onclick="addBookmark('${id}')">OK</button>
+      </div>
+    </div>`,
+    { width: '300px', height: 'auto', ...options }
+  );
+}
+
+/** WINDOW FUNCTIONS **/
 function createImageWindow(id) {
   createWindow(
     id,
@@ -61,7 +118,7 @@ function createImageWindow(id) {
       style="background-image:url('${windows[id].url}');"
       alt="${windows[id].title}"
     ></div>`,
-    { width: "900px", height: "600px" }
+    { width: '900px', height: '600px' }
   );
 }
 
@@ -77,28 +134,16 @@ function createVideoWindow(id) {
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
       allowfullscreen
     />"`,
-    { width: "900px", height: "600px" }
+    { width: '900px', height: '600px' }
   );
 }
 
 function createNoteWindow(id) {
-  if (!id) id = genId();
-
-  if (!windows[id]) {
-    windows[id] = {
-      title: "New Note",
-      type: "note",
-      text: "",
-      location: { x: DEFAULT_LOCATON.x, y: DEFAULT_LOCATON.y },
-    };
-    saveWindows();
-  }
-
   createWindow(
     id,
     windows[id].title,
     `<textarea id="${
-      id + "-content"
+      id + '-content'
     }" class="note-content" onkeyup="updateNoteText('${id}')">${
       windows[id].text
     }</textarea>`
@@ -121,28 +166,28 @@ function createWebpageWindow(id, title, url) {
     id,
     windows[id].title,
     `<iframe class="webpage-iframe" src="${windows[id].url}" title="${windows[id].title}"></iframe>`,
-    { width: "900px", height: "600px" }
+    { width: '900px', height: '600px' }
   );
 }
 
 function createConfigWindow() {
   createWindow(
     CONFIG_ID,
-    "Settings",
+    'Settings',
     `<div class="padded-content">
       <div class="input-field">
         <label>Wallpaper</label>
-        <input id="wallpaper-input" value="${config.wallpaper || ""}"/>
+        <input id="wallpaper-input" value="${config.wallpaper || ''}"/>
       </div>
 
       <div class="input-field">
         <label>Display Webpages Internally?</label>
         <button
           id="internal-webpages-input"
-          class="button ${config.internalWebpages ? "active" : ""}"
+          class="button ${config.internalWebpages ? 'active' : ''}"
           onclick="toggleInternalWebpagesButton()"
         >
-          ${config.internalWebpages ? "Interal" : "External"}
+          ${config.internalWebpages ? 'Interal' : 'External'}
         </button>
       </div>
 
@@ -153,84 +198,7 @@ function createConfigWindow() {
   );
 }
 
-function createAddVideoWindow() {
-  createWindow(
-    ADD_VIDEO_ID,
-    "Create Video Window",
-    `<div class="padded-content">
-      <div class="input-field">
-        <label>Name</label>
-        <input id="video-name-input" />
-      </div>
-      <div class="input-field">
-        <label>Video URL</label>
-        <input id="video-input" />
-      </div>
-      <div class="button-field">
-        <button class="button" onclick="removeWindow('${ADD_VIDEO_ID}')">Cancel</button>
-        <button class="button" onclick="addVideo()">OK</button>
-      </div>
-    </div>`,
-    { width: "300px", height: "auto" }
-  );
-}
-
-function createAddPictureWindow() {
-  createWindow(
-    ADD_IMAGE_ID,
-    "Create Image Window",
-    `<div class="padded-content">
-      <div class="input-field">
-        <label>Name</label>
-        <input id="image-name-input" />
-      </div>
-      <div class="input-field">
-        <label>Image URL</label>
-        <input id="image-input" />
-      </div>
-      <div class="button-field">
-        <button class="button" onclick="removeWindow('${ADD_IMAGE_ID}')">Cancel</button>
-        <button class="button" onclick="addPicture()">OK</button>
-      </div>
-    </div>`,
-    { width: "300px", height: "auto" }
-  );
-}
-
-function createAddBookmarkWindow(id, options = {}) {
-  createWindow(
-    ADD_BOOKMARK_ID,
-    "Create Bookmark",
-    `<div class="padded-content">
-      <div class="input-field">
-        <label>Name</label>
-        <input id="name-input" />
-      </div>
-      <div class="input-field">
-        <label>URL</label>
-        <input id="href-input" />
-      </div>
-      <div class="button-field">
-        <button class="button" onclick="removeWindow('${ADD_BOOKMARK_ID}')">Cancel</button>
-        <button class="button" onclick="addBookmark('${id}')">OK</button>
-      </div>
-    </div>`,
-    { width: "300px", height: "auto", ...options }
-  );
-}
-
 function createBookmarkWindow(id, options = {}) {
-  if (!id) id = genId();
-
-  if (!windows[id]) {
-    windows[id] = {
-      title: "New Window",
-      bookmarks: [],
-      location: { x: DEFAULT_LOCATON.x, y: DEFAULT_LOCATON.y },
-    };
-    saveWindows();
-  }
-
   createWindow(
     id,
     windows[id].title,
@@ -239,6 +207,7 @@ function createBookmarkWindow(id, options = {}) {
   );
 }
 
+/** CONTENT FUNCTIONS **/
 function bookmarkContent(id, bookmarks) {
   const lis = bookmarks.map((b, idx) => {
     if (config.internalWebpages) {
@@ -279,6 +248,6 @@ function bookmarkContent(id, bookmarks) {
         Add Bookmark
       </button>
     </div>
-    <ul class="bookmark-list">${lis.join("")}</ul>
+    <ul class="bookmark-list">${lis.join('')}</ul>
   `;
 }
