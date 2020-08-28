@@ -1,5 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
 
+:root {
+  --default-bg: #40b4c4;
+
+  --window-bg: #d0d0d0;
+  --window-toolbar-bg: var(--window-bg);
+  --window-border: 1px solid black;
+  --window-shadow: 4px 4px rgba(0, 0, 0, 0.3);
+
+  --hover-bg: rgba(0, 0, 0, 0.1);
+
+  --font-color: black;
+  --font-invert-color: white;
+  --font-family: "Alata", sans-serif;
+}
+
+body.vapor {
+  --default-bg: #9b94ff;
+
+  --window-bg: #fdc6ee;
+  --window-toolbar-bg: var(--window-bg);
+  --window-border: 1px solid black;
+  --window-shadow: 4px 4px rgba(0, 0, 0, 0.3);
+
+  --hover-bg: rgba(0, 0, 0, 0.1);
+
+  --font-color: black;
+  --font-invert-color: white;
+  --font-family: "Alata", sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -9,17 +39,26 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-
-  font-family: "Alata", sans-serif;
   display: flex;
   flex-direction: column;
+  font-family: var(--font-family);
+}
+
+#desktop {
+  background-color: var(--default-bg);
+  width: 100%;
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .toolbar {
   width: 100%;
   height: 24px;
-  background-color: #d0d0d0;
-  border-bottom: 1px solid black;
+  background-color: var(--window-bg);
+  border-bottom: var(--window-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,10 +80,10 @@ body {
 .toolbar-button {
   border: none;
   background-color: transparent;
-  font-family: "Alata", sans-serif;
+  font-family: var(--font-family);
   font-size: 11px;
   text-decoration: none;
-  color: black;
+  color: var(--font-color);
   margin: 0px;
   padding: 0px 8px;
 }
@@ -52,33 +91,23 @@ body {
   cursor: pointer;
 }
 .toolbar-button.bold {
-  font-weight: 600;;
+  font-weight: 600;
 }
 
 #toolbar-time {
-  border-left: 1px solid black;
+  border-left: var(--window-border);
 }
 #toolbar-time:hover {
   cursor: default;
 }
 
-#desktop {
-  background-color: #40b4c4;
-  width: 100%;
-  height: 100%;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 .window {
-  background-color: #d0d0d0;
+  background-color: var(--window-bg);
   width: 400px;
   height: 500px;
-  border: 1px solid black;
+  border: var(--window-border);
   position: absolute;
-  box-shadow: 4px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--window-shadow);
   display: flex;
   flex-direction: column;
   resize: both;
@@ -89,9 +118,10 @@ body {
   width: 100%;
   height: 26px;
   padding: 5px;
-  border-bottom: 1px solid black;
+  border-bottom: var(--window-border);
   display: flex;
   align-items: center;
+  background-color: var(--window-toolbar-bg);
 }
 .window-toolbar:hover {
   cursor: grab;
@@ -113,8 +143,8 @@ body {
   width: 100%;
   height: 20%;
   top: 10%;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: var(--window-border);
+  border-bottom: var(--window-border);
 }
 .window-toolbar-lines::after {
   content: "";
@@ -122,14 +152,14 @@ body {
   top: 60%;
   width: 100%;
   height: 20%;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: var(--window-border);
+  border-bottom: var(--window-border);
 }
 
 .close-button {
   height: 14px;
   width: 14px;
-  border: 1px solid black;
+  border: var(--window-border);
   background-color: transparent;
   padding: 0px;
   position: relative;
@@ -142,7 +172,7 @@ body {
   left: 0px;
   transform-origin: top left;
   transform: rotate(45deg);
-  border-bottom: 1px solid black;
+  border-bottom: var(--window-border);
 }
 .close-button::before {
   content: "";
@@ -152,7 +182,7 @@ body {
   right: 0px;
   transform-origin: top right;
   transform: rotate(-45deg);
-  border-bottom: 1px solid black;
+  border-bottom: var(--window-border);
 }
 .close-button:hover {
   cursor: pointer;
@@ -188,7 +218,7 @@ body {
 }
 
 .bookmark-icon {
-  border: 1px solid black;
+  border: var(--window-border);
   width: 90px;
   height: 60px;
   margin-top: 10px;
@@ -198,7 +228,7 @@ body {
   content: "";
   display: block;
   position: absolute;
-  border: 1px solid black;
+  border: var(--window-border);
   width: 40px;
   height: 8px;
   top: -10px;
@@ -207,20 +237,20 @@ body {
 
 .bookmark-title {
   margin: 0px;
-  color: black;
+  color: var(--font-color);
 }
 
 .bookmark-toolbar {
   display: flex;
   justify-content: space-between;
   padding: 4px;
-  border-bottom: 1px solid black;
+  border-bottom: var(--window-border);
   position: relative;
 }
 .bookmark-toolbar::after {
   content: "";
   width: 100%;
-  border-bottom: 1px solid black;
+  border-bottom: var(--window-border);
   position: absolute;
   left: 0;
   bottom: -4px;
@@ -246,7 +276,7 @@ body {
 }
 .input-field input {
   width: 70%;
-  border: 1px solid black;
+  border: var(--window-border);
 }
 
 .button-field {
@@ -257,17 +287,17 @@ body {
 }
 
 .button {
-  border: 1px solid black;
+  border: var(--window-border);
   border-radius: 4px;
   background-color: transparent;
-  font-family: "Alata", sans-serif;
+  font-family: var(--font-family);
   padding: 4px 8px;
   min-width: 70px;
   margin-left: 8px;
 }
 .button.active {
-  background-color: black;
-  color: white;
+  background-color: var(--font-color);
+  color: var(--font-invert-color);
 }
 .button:hover {
   cursor: pointer;
@@ -306,8 +336,8 @@ body {
   position: absolute;
   top: 20px;
   width: 200px;
-  background-color: #d0d0d0;
-  border: 1px solid black;
+  background-color: var(--window-bg);
+  border: var(--window-border);
   z-index: 99;
 }
 
@@ -324,7 +354,7 @@ body {
 
 .menu li:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--hover-bg);
 }
 
 .image-window {
