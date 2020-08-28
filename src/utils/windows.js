@@ -62,21 +62,7 @@ function loadWindows() {
     return acc;
   }, zIndex);
 
-  Object.keys(windows).forEach((w) => {
-    if (windows[w].bookmarks && Array.isArray(windows[w].bookmarks)) {
-      return createBookmarkWindow(w);
-    }
-    switch (windows[w].type) {
-      case 'note':
-        return createNoteWindow(w);
-      case 'image':
-        return createImageWindow(w);
-      case 'video':
-        return createVideoWindow(w);
-      default:
-        return createWebpageWindow(w);
-    }
-  });
+  Object.keys(windows).forEach(drawWindow);
 }
 
 function saveWindows() {
@@ -90,10 +76,23 @@ function redrawWindow(id) {
     windows[id].cleanup();
   }
   document.getElementById(id).remove();
+  drawWindow(id);
+}
+
+function drawWindow(id) {
   if (windows[id].bookmarks && Array.isArray(windows[id].bookmarks)) {
     return createBookmarkWindow(id);
   }
-  return createWebpageWindow(id);
+  switch (windows[id].type) {
+    case 'note':
+      return createNoteWindow(id);
+    case 'image':
+      return createImageWindow(id);
+    case 'video':
+      return createVideoWindow(id);
+    default:
+      return createWebpageWindow(id);
+  }
 }
 
 function updateNoteText(id) {

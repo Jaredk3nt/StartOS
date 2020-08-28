@@ -185,11 +185,24 @@ function createConfigWindow() {
         <button
           id="internal-webpages-input"
           class="button ${config.internalWebpages ? 'active' : ''}"
-          onclick="toggleInternalWebpagesButton()"
+          onclick="toggleButton('internal-webpages-input', ['Internal', 'External'])"
         >
           ${config.internalWebpages ? 'Interal' : 'External'}
         </button>
       </div>
+
+      <div class="input-field">
+        <label>Display Webpages In a New Tab?</label>
+        <button
+          id="tab-webpages-input"
+          class="button ${config.newTab ? 'active' : ''}"
+          onclick="toggleButton('tab-webpages-input', ['New Tab', 'Same Window'])"
+        >
+          ${config.newTab ? 'New Tab' : 'Same Window'}
+        </button>
+      </div>
+
+      
 
       <div class="button-field">
         <button class="button" onclick="updateConfig()">SAVE</button>
@@ -197,6 +210,14 @@ function createConfigWindow() {
     </div>`
   );
 }
+
+/* <div class="input-field">
+        <label>Theme</label>
+        <select id="theme-input" name="theme-input">
+          <option value="default">Default</option>  
+          <option value="dark">Dark</option>
+        </select>
+      </div> */
 
 function createBookmarkWindow(id, options = {}) {
   createWindow(
@@ -232,7 +253,7 @@ function bookmarkContent(id, bookmarks) {
         <div class="flex-end">
           <button class="close-button" onclick='removeBookmark("${id}", "${idx}")'></button>
         </div>
-        <a href="${b.href}">
+        <a href="${b.href}" ${config.newTab ? 'target="_blank"': ''}>
           <div class="bookmark-icon"></div>
           <p class="bookmark-title">${b.label}</p>
         </a>
