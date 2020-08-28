@@ -19,14 +19,18 @@ function saveConfig() {
 }
 
 function updateConfig() {
-  const wallpaper = document.getElementById("wallpaper-input").value;
+  const wallpaper = document.getElementById('wallpaper-input').value;
   const internalWebpages = document
-    .getElementById("internal-webpages-input")
-    .classList.contains("active");
+    .getElementById('internal-webpages-input')
+    .classList.contains('active');
+  const newTab = document
+    .getElementById('tab-webpages-input')
+    .classList.contains('active');
   config = {
     ...config,
     wallpaper,
     internalWebpages,
+    newTab
   };
   applyConfig();
   saveConfig();
@@ -34,36 +38,36 @@ function updateConfig() {
 }
 
 function loadWallpaper() {
-  const el = document.getElementById("desktop");
+  const el = document.getElementById('desktop');
   if (config.wallpaper) {
     if (
       // TODO: replace conditions with regex
-      config.wallpaper.startsWith("http") ||
-      config.wallpaper.startsWith("https")
+      config.wallpaper.startsWith('http') ||
+      config.wallpaper.startsWith('https')
     ) {
-      el.style["background-image"] = `url("${config.wallpaper}")`;
+      el.style['background-image'] = `url("${config.wallpaper}")`;
     }
 
     if (
-      config.wallpaper.startsWith("rgb") ||
-      config.wallpaper.startsWith("rgba") ||
-      config.wallpaper.startsWith("#")
+      config.wallpaper.startsWith('rgb') ||
+      config.wallpaper.startsWith('rgba') ||
+      config.wallpaper.startsWith('#')
     ) {
-      el.style["background-color"] = config.wallpaper;
+      el.style['background-color'] = config.wallpaper;
     }
   } else {
-    el.style["background-color"] = null;
-    el.style["background-image"] = null;
+    el.style['background-color'] = null;
+    el.style['background-image'] = null;
   }
 }
 
-function toggleInternalWebpagesButton() {
-  const el = document.getElementById("internal-webpages-input");
-  if (el.classList.contains("active")) {
-    el.innerText = "External";
-    return el.classList.remove("active");
+function toggleButton(id, labels) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('active')) {
+    el.innerText = labels[1];
+    return el.classList.remove('active');
   }
 
-  el.innerText = "Internal";
-  el.classList.add("active");
+  el.innerText = labels[0];
+  el.classList.add('active');
 }

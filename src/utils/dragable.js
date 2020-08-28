@@ -9,11 +9,11 @@ function enableDragable(handle, target, container) {
     const containerRect = containerEl.getBoundingClientRect();
 
     switch (e.type) {
-      case "mousedown":
+      case 'mousedown':
         xOffset = e.clientX - rect.left + containerRect.left;
         yOffset = e.clientY - rect.top;
         break;
-      case "touchstart":
+      case 'touchstart':
         xOffset = e.targetTouches[0].clientX - rect.left + containerRect.left;
         yOffset = e.targetTouches[0].clientY - rect.top; //+ containerRect.top;
         break;
@@ -21,10 +21,10 @@ function enableDragable(handle, target, container) {
         break;
     }
 
-    el.style.position = "absolute";
+    el.style.position = 'absolute';
     // el.classList.add('active-window'); // TODO: handle window stacking
-    window.addEventListener("mousemove", drag, true);
-    window.addEventListener("touchmove", drag, true);
+    window.addEventListener('mousemove', drag, true);
+    window.addEventListener('touchmove', drag, true);
     window.onmouseup = dragEnd;
   }
 
@@ -32,11 +32,11 @@ function enableDragable(handle, target, container) {
     let x;
     let y;
     switch (e.type) {
-      case "mousemove":
+      case 'mousemove':
         x = e.clientX - xOffset;
         y = e.clientY - yOffset;
         break;
-      case "touchmove":
+      case 'touchmove':
         x = e.targetTouches[0].clientX - xOffset;
         y = e.targetTouches[0].clientY - yOffset;
         break;
@@ -49,12 +49,12 @@ function enableDragable(handle, target, container) {
     const containerEl = document.getElementById(container);
     const containerRect = containerEl.getBoundingClientRect();
 
-    if (x < containerRect.left) x = containerRect.left;
-    if (y < containerRect.top) y = containerRect.top;
     if (x > containerRect.right - rect.width)
       x = containerRect.right - rect.width;
     if (y > containerRect.bottom - rect.height)
       y = containerRect.bottom - rect.height;
+    if (x < containerRect.left) x = containerRect.left;
+    if (y < containerRect.top) y = containerRect.top;
 
     if (windows[target]) {
       windows[target].location = { x, y };
@@ -66,8 +66,8 @@ function enableDragable(handle, target, container) {
   }
 
   function dragEnd() {
-    window.removeEventListener("mousemove", drag, true);
-    window.removeEventListener("touchmove", drag, true);
+    window.removeEventListener('mousemove', drag, true);
+    window.removeEventListener('touchmove', drag, true);
     window.onmouseup = null;
   }
 
@@ -89,13 +89,13 @@ function enableDragable(handle, target, container) {
     const el = document.getElementById(target);
     // el.removeEventListener("resize", handleResize);
     const handleEl = document.getElementById(handle);
-    handleEl.removeEventListener("mousedown", dragStart, true);
-    handleEl.removeEventListener("touchstart", dragStart, true);
+    handleEl.removeEventListener('mousedown', dragStart, true);
+    handleEl.removeEventListener('touchstart', dragStart, true);
   }
 
   const handleEl = document.getElementById(handle);
-  handleEl.addEventListener("mousedown", dragStart, true);
-  handleEl.addEventListener("touchstart", dragStart, true);
+  handleEl.addEventListener('mousedown', dragStart, true);
+  handleEl.addEventListener('touchstart', dragStart, true);
 
   const el = document.getElementById(target);
   new ResizeObserver(handleResize).observe(el);

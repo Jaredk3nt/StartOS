@@ -8,10 +8,29 @@
   --window-border: 1px solid black;
   --window-shadow: 4px 4px rgba(0, 0, 0, 0.3);
 
+  --input-bg: white;
+
   --hover-bg: rgba(0, 0, 0, 0.1);
 
   --font-color: black;
   --font-invert-color: white;
+  --font-family: "Alata", sans-serif;
+}
+
+body.dark {
+  --default-bg: #40b4c4;
+
+  --window-bg: #383a3b;
+  --window-toolbar-bg: var(--window-bg);
+  --window-border: 1px solid black;
+  --window-shadow: 4px 4px rgba(0, 0, 0, 0.3);
+
+  --input-bg: var(--window-bg);
+
+  --hover-bg: rgba(0, 0, 0, 0.1);
+
+  --font-color: white;
+  --font-invert-color: black;
   --font-family: "Alata", sans-serif;
 }
 
@@ -75,6 +94,7 @@ body {
   margin: 0px;
   font-weight: 400;
   margin-right: 8px;
+  color: var(--font-color);
 }
 
 .toolbar-button {
@@ -96,6 +116,7 @@ body {
 
 #toolbar-time {
   border-left: var(--window-border);
+  color: var(--font-color);
 }
 #toolbar-time:hover {
   cursor: default;
@@ -129,6 +150,7 @@ body {
 
 .window-toolbar-title {
   font-size: 14px;
+  color: var(--font-color);
 }
 
 .window-toolbar-lines {
@@ -211,6 +233,7 @@ body {
 
 .bookmark a {
   text-decoration: none;
+  color: var(--font-color);
 }
 
 .bookmark .close-button {
@@ -259,6 +282,7 @@ body {
 .toolbar-text {
   font-size: 11px;
   margin: 0px;
+  color: var(--font-color);
 }
 
 .padded-content {
@@ -270,13 +294,18 @@ body {
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;
+  color: var(--font-color);
 }
 .input-field label {
   font-size: 13px;
+  color: var(--font-color);
 }
 .input-field input {
   width: 70%;
   border: var(--window-border);
+  background-color: var(--input-bg);
+  color: var(--font-color);
+  padding: .25em;
 }
 
 .button-field {
@@ -294,6 +323,10 @@ body {
   padding: 4px 8px;
   min-width: 70px;
   margin-left: 8px;
+  color: var(--font-color);
+}
+.button:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .button.active {
   background-color: var(--font-color);
@@ -323,12 +356,16 @@ body {
   height: 100%;
   padding: 1em;
   overflow: auto;
+  background-color: var(--input-bg);
+  border: none;
+  color: var(--font-color);
 }
 
 .menu-button {
   position: relative;
   display: flex;
   align-items: center;
+  color: var(--font-color);
 }
 
 .menu {
@@ -350,6 +387,7 @@ body {
 .menu li {
   padding: 4px 8px;
   font-size: 12px;
+  color: var(--font-color);
 }
 
 .menu li:hover {
