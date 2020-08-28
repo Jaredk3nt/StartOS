@@ -31,11 +31,11 @@
           <div id="window-menu" class="menu">
             <ul>
               <li
-                onclick="handleMenuClick('window-menu', createBookmarkWindow)"
+                onclick="handleMenuClick('window-menu', createAddBookmarksWindow)"
               >
                 Bookmarks
               </li>
-              <li onclick="handleMenuClick('window-menu', createNoteWindow)">
+              <li onclick="handleMenuClick('window-menu', createAddNoteWindow)">
                 Note
               </li>
               <li
@@ -71,10 +71,6 @@
       const LS_WINDOWS_KEY = "startwave-windows";
       const LS_CONFIG_KEY = "startwave-config";
       const DEFAULT_LOCATON = { x: 8, y: 32 };
-      const ADD_BOOKMARK_ID = "create-bookmark";
-      const ADD_IMAGE_ID = "create-picture";
-      const ADD_VIDEO_ID = "create-video";
-      const CONFIG_ID = "config-window";
       const DAYS = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
       function genId() {
@@ -105,10 +101,9 @@
         } ${hours}:${d.getMinutes().toString().padStart(2, "0")}`;
       }
     </script>
+    <script src="src/utils/windows.js"></script>
     <script src="src/windows.js"></script>
     <script src="src/utils/config.js"></script>
-    <script src="src/utils/bookmarks.js"></script>
-    <script src="src/utils/windows.js"></script>
     <script src="src/utils/dragable.js"></script>
     <script>
       loadConfig();
