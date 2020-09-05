@@ -41,17 +41,12 @@ function loadWallpaper() {
   const el = document.getElementById('desktop');
   if (config.wallpaper) {
     if (
-      // TODO: replace conditions with regex
-      config.wallpaper.startsWith('http') ||
-      config.wallpaper.startsWith('https')
+      config.wallpaper.match(/(http:\/\/)|(https:\/\/)/)
     ) {
       el.style['background-image'] = `url("${config.wallpaper}")`;
     }
-
     if (
-      config.wallpaper.startsWith('rgb') ||
-      config.wallpaper.startsWith('rgba') ||
-      config.wallpaper.startsWith('#')
+      config.wallpaper.match(/(rgb)|(rgba)|(^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)/)
     ) {
       el.style['background-color'] = config.wallpaper;
     }
