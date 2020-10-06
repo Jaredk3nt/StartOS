@@ -38,20 +38,17 @@ function updateConfig() {
 }
 
 function loadWallpaper() {
+  const httpsRegex = /(http:\/\/)|(https:\/\/)/g
+  const colorRegex = /(rgb)|(rgba)|(^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)/g
   const el = document.getElementById('desktop');
   if (config.wallpaper) {
     if (
-      // TODO: replace conditions with regex
-      config.wallpaper.startsWith('http') ||
-      config.wallpaper.startsWith('https')
+      httpsRegex.test(config.wallpaper)
     ) {
       el.style['background-image'] = `url("${config.wallpaper}")`;
     }
-
     if (
-      config.wallpaper.startsWith('rgb') ||
-      config.wallpaper.startsWith('rgba') ||
-      config.wallpaper.startsWith('#')
+      colorRegex.test(config.wallpaper)
     ) {
       el.style['background-color'] = config.wallpaper;
     }
